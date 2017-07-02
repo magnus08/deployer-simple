@@ -1,87 +1,71 @@
 
-class ProductList extends React.Component {
+class ProjectList extends React.Component {
   state = {
-    products: [],
+    projects: [],
   };
 
 
   componentDidMount() {
-    this.setState({ products: Seed.products });
+    this.setState({ projects: Seed.projects });
   }
 
-  handleProductUpVote = (productId) => {
-    console.log(productId + ' was upvoted.');
-    const nextProducts = this.state.products.map((product) => {
-      if (product.id === productId) {
-        return Object.assign({}, product, {
-          votes: product.votes + 1,
+  handleProjectToggleAutodeploy = (projectId) => {
+    console.log(projectId + ' was toggled.');
+    const nextProjects = this.state.projects.map((project) => {
+      if (project.id === projectId) {
+        return Object.assign({}, project, {
+          autoDeploy: !project.autoDeploy,
         });
       } else {
-        return product;
+        return project;
       }
     });
     this.setState({
-      products: nextProducts,
+      projects: nextProjects,
     });
   }
 
   render() {
-    const products = this.state.products.sort((a, b) => (
-      b.votes - a.votes
+    const projects = this.state.projects.sort((a, b) => (
+      b.id - a.id
     ));
-    const productComponents = products.map((product) => (
-      <Product
-        key={'product-' + product.id}
-        id={product.id}
-        title={product.title}
-        description={product.description}
-        url={product.url}
-        votes={product.votes}
-        submitterAvatarUrl={product.submitterAvatarUrl}
-        productImageUrl={product.productImageUrl}
-        onVote={this.handleProductUpVote}
+    const projectComponents = projects.map((project) => (
+      <Project
+        key={'project-' + project.id}
+        id={project.id}
+        title={project.title}
+        path={project.path}
+        autoDeploy={project.autoDeploy}
+        onToggleAutoDeploy={this.handleProjectToggleAutodeploy}
       />
     ));
     return (
       <div className='ui unstackable items'>
-        {productComponents}
+        {projectComponents}
       </div>
     );
   }
 }
 
-class Product extends React.Component {
-  handleUpVote = () => (
-    this.props.onVote(this.props.id)
+class Project extends React.Component {
+  handleToggleAutodeploy = () => (
+    this.props.onToggleAutoDeploy(this.props.id)
   );
 
   render() {
     return (
       <div className='item'>
-        <div className='image'>
-          <img src={this.props.productImageUrl} />
-        </div>
         <div className='middle aligned content'>
           <div className='header'>
-            <a onClick={this.handleUpVote}>
+            <a onClick={this.handleToggleAutodeploy}>
               <i className='large caret up icon' />
             </a>
-            {this.props.votes}
+            {this.props.autoDeploy}
           </div>
           <div className='description'>
-            <a href={this.props.url}>
-              {this.props.title}
-            </a>
             <p>
               {this.props.description}
             </p>
-          </div>
-          <div className='extra'>
-            <span>Submitted by:</span>
-            <img
-              className='ui avatar image'
-              src={this.props.submitterAvatarUrl}
-            />
           </div>
         </div>
       </div>
@@ -90,6 +74,6 @@ class Product extends React.Component {
 }
 
 ReactDOM.render(
-  <ProductList />,
+  <ProjectList />,
   document.getElementById('content')
 );
