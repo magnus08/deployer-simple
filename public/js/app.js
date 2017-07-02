@@ -40,8 +40,22 @@ class ProjectList extends React.Component {
       />
     ));
     return (
-      <div className='ui unstackable items'>
-        {projectComponents}
+      <div className='ui one column relaxed grid'>
+        <div className="column">
+          <table className="ui blue right aligned table">
+            <thead>
+              <tr>
+                <th className="center aligned">Auto</th>
+                <th className="left aligned">Project</th>
+                <th className="center aligned">Deploy</th>
+                <th className="center aligned">Maven</th>
+              </tr>
+            </thead>
+            <tbody>
+              {projectComponents}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
@@ -54,21 +68,19 @@ class Project extends React.Component {
 
   render() {
     return (
-      <div className='item'>
-        <div className='middle aligned content'>
-          <div className='header'>
-            <a onClick={this.handleToggleAutodeploy}>
-              <i className= { this.props.autoDeploy?'toggle on icon':'toggle off icon' }
-              />
-            </a>
-          </div>
-          <div className='description'>
-            <p>
-              {this.props.title}
-            </p>
-          </div>
-        </div>
-      </div>
+      <tr>
+        <td className='left aligned'>
+          <a onClick={this.handleToggleAutodeploy}>
+            <i className= { this.props.autoDeploy?'toggle on icon':'toggle off icon' }
+            />
+          </a>
+        </td>
+        <td className='center aligned'>
+          <p>
+            {this.props.title}
+          </p>
+        </td>
+      </tr>
     );
   }
 }
