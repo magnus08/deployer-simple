@@ -1,3 +1,7 @@
+Simple app for learning react. This project it without flux/redux.
+
+Boilerplate code from Fullstack React book.
+
 ### Running the app
 
 1. Ensure you have `npm` installed.
