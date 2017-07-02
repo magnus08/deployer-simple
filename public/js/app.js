@@ -58,9 +58,9 @@ class Project extends React.Component {
         <div className='middle aligned content'>
           <div className='header'>
             <a onClick={this.handleToggleAutodeploy}>
-              <i className='large caret up icon' />
+              <i className= { this.props.autoDeploy?'toggle on icon':'toggle off icon' }
+              />
             </a>
-            {this.props.autoDeploy}
           </div>
           <div className='description'>
             <p>
