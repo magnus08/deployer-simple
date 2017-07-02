@@ -47,7 +47,7 @@ class ProjectList extends React.Component {
               <tr>
                 <th className="center aligned">Auto</th>
                 <th className="left aligned">Project</th>
-                <th className="center aligned">Deploy</th>
+                <th className="center aligned">Redeploy</th>
                 <th className="center aligned">Maven</th>
               </tr>
             </thead>
@@ -69,16 +69,26 @@ class Project extends React.Component {
   render() {
     return (
       <tr>
-        <td className='left aligned'>
+        <td className='center aligned'>
           <a onClick={this.handleToggleAutodeploy}>
             <i className= { this.props.autoDeploy?'toggle on icon':'toggle off icon' }
             />
           </a>
         </td>
-        <td className='center aligned'>
+        <td className='left aligned'>
           <p>
             {this.props.title}
           </p>
+        </td>
+        <td className='center aligned'>
+          <a onClick={this.handleToggleAutodeploy}>
+            <i className='refresh icon'/>
+          </a>
+        </td>
+        <td className='center aligned'>
+          <a onClick={this.handleToggleAutodeploy}>
+            <i className='recycle icon'/>
+          </a>
         </td>
       </tr>
     );
