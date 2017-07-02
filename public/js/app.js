@@ -10,7 +10,6 @@ class ProjectList extends React.Component {
   }
 
   handleProjectToggleAutodeploy = (projectId) => {
-    console.log(projectId + ' was toggled.');
     const nextProjects = this.state.projects.map((project) => {
       if (project.id === projectId) {
         return Object.assign({}, project, {
@@ -23,11 +22,12 @@ class ProjectList extends React.Component {
     this.setState({
       projects: nextProjects,
     });
+    console.log(projectId + ' was toggled, new state = ', nextProjects);
   }
 
   render() {
     const projects = this.state.projects.sort((a, b) => (
-      b.id - a.id
+      a.id - b.id
     ));
     const projectComponents = projects.map((project) => (
       <Project
@@ -64,7 +64,7 @@ class Project extends React.Component {
           </div>
           <div className='description'>
             <p>
-              {this.props.description}
+              {this.props.title}
             </p>
           </div>
         </div>
