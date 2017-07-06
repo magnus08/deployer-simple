@@ -21,15 +21,16 @@ window.client = (function () {
         .then(success);
     }
 
-    function createTimer(data) {
-        return fetch('/api/timers', {
-            method: 'post',
-            body: JSON.stringify(data),
+    function redeploy(projectId) {
+        return fetch('http://127.0.0.1:5000/project/' + projectId, {
+            method: 'put',
+            body: JSON.stringify({ redeploy: true}),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-        }).then(checkStatus);
+        }).then(checkStatus)
+        .then(parseJSON);
     }
 
     function updateTimer(data) {
@@ -62,5 +63,6 @@ window.client = (function () {
     return {
         getProjects,
         getProject,
+        redeploy,
     };
 }());

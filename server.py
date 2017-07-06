@@ -18,7 +18,7 @@ class Projects(Resource):
         return projects
 
 class Project(Resource):
-    def get(self, project_id):
+    def put(self, project_id):
         time.sleep(2)
         return {'hello': project_id}
 

@@ -28,14 +28,16 @@ class ProjectList extends React.Component {
         this.setState({
             projects: nextProjects,
         });
+
         console.log(projectId + ' was toggled, new state = ', nextProjects);
     };
 
-    handleProjectRedeploy = (projectId) => {
+    updateRedeploy = (projectId, value)  => {
+        console.log("Update redeploy ", projectId, value);
         const nextProjects = this.state.projects.map((project) => {
             if (project.id === projectId) {
                 return Object.assign({}, project, {
-                    redeploying: true,
+                    redeploying: value,
                 });
             } else {
                 return project;
@@ -44,6 +46,15 @@ class ProjectList extends React.Component {
         this.setState({
             projects: nextProjects,
         });
+    }
+
+    handleProjectRedeploy = (projectId) => {
+        console.log("Here!", this.updateRedeploy);
+        this.updateRedeploy(projectId, true);
+        client.redeploy(projectId)
+        .then(
+            () => this.updateRedeploy(projectId, false)
+        );
         console.log(projectId + ' redeploy started');
     }
 
