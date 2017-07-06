@@ -33,6 +33,18 @@ window.client = (function () {
         .then(parseJSON);
     }
 
+    function rebuild(projectId) {
+        return fetch('http://127.0.0.1:5000/project/' + projectId, {
+            method: 'put',
+            body: JSON.stringify({ rebuild: true}),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        }).then(checkStatus)
+        .then(parseJSON);
+    }
+
     function updateTimer(data) {
         return fetch('/api/timers', {
             method: 'put',
@@ -64,5 +76,6 @@ window.client = (function () {
         getProjects,
         getProject,
         redeploy,
+        rebuild,
     };
 }());

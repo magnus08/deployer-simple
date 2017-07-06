@@ -48,21 +48,12 @@ class ProjectList extends React.Component {
         });
     }
 
-    handleProjectRedeploy = (projectId) => {
-        console.log("Here!", this.updateRedeploy);
-        this.updateRedeploy(projectId, true);
-        client.redeploy(projectId)
-        .then(
-            () => this.updateRedeploy(projectId, false)
-        );
-        console.log(projectId + ' redeploy started');
-    }
-
-    handleProjectRebuild = (projectId) => {
+    updateRebuild = (projectId, value)  => {
+        console.log("Update rebuild ", projectId, value);
         const nextProjects = this.state.projects.map((project) => {
             if (project.id === projectId) {
                 return Object.assign({}, project, {
-                    rebuilding: true,
+                    rebuilding: value,
                 });
             } else {
                 return project;
@@ -71,7 +62,22 @@ class ProjectList extends React.Component {
         this.setState({
             projects: nextProjects,
         });
-        console.log(projectId + ' rebuild started');
+    }
+
+    handleProjectRedeploy = (projectId) => {
+        this.updateRedeploy(projectId, true);
+        client.redeploy(projectId)
+        .then(
+            () => this.updateRedeploy(projectId, false)
+        );
+    }
+
+    handleProjectRebuild = (projectId) => {
+        this.updateRebuild(projectId, true);
+        client.rebuild(projectId)
+        .then(
+            () => this.updateRebuild(projectId, false)
+        );
     }
 
     render() {
